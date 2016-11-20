@@ -2,7 +2,7 @@
 	"manifest_version": 2,
  	"name": "RateMyUB",
  	"version": "1.0",
- 	"description": "View ratemyprofessors ratings right in the HUB!",
+ 	"description": "View RateMyProfessors.com ratings right in the HUB!",
   "icons": { "16": "icon.png", "48": "icon.png", "128": "icon.png" },
 
 	"browser_action": {
