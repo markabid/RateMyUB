@@ -1,10 +1,19 @@
-var professorMethodID = "MTG_INSTR$" //variable instructor is stored under in HUB
+var profVariableName = "MTG_INSTR$" //variable instructor is stored under in HUB
 var profName = ""; // The name of the professor currently being searched
 var searchPageURL = ""; // The url for the search page at ratemyprofessors
 var profRating = ""; // The rating of the professor
 var numberProfessorReviews = ""; //number of reviews the professor has
 
-RunScript();
+//checks if instructor is stored under certain variable since this changes based upon how you get to the results page
+if(document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(profVariableName + 0) != null){
+  RunScript();
+}
+else{
+  profVariableName = "MTGPAT_INSTR$"
+  RunScript();
+}
+
+//RunScript();
 
 function RunScript()
 {
@@ -27,7 +36,7 @@ function getProfessorName(indexOfProfessor)
 {
 	try
 	{
-		profName = document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(professorMethodID + indexOfProfessor).innerHTML;
+		profName = document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(profVariableName + indexOfProfessor).innerHTML;
 		return profName;
 	}
 	catch (err)
@@ -93,7 +102,7 @@ function getProfessorRating(professorIndex, SearchPageURL)
       }
     }
 
-		var professorID = document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(professorMethodID + response.professorIndex);
+		var professorID = document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(profVariableName + response.professorIndex);
 
 		addRatingToPage(professorID, profRating, response.searchPageURL, numberProfessorReviewsFinal);
 	});
