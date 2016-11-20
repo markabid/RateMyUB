@@ -13,8 +13,6 @@ else{
   RunScript();
 }
 
-//RunScript();
-
 function RunScript()
 {
  	var professorIndex = 0;
