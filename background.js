@@ -17,7 +17,6 @@ chrome.runtime.onMessage.addListener(
                 professorIndex: request.index});
         };
         xhttp.onerror = function() {
-            // callback to clean up the communication port.
             console.log("error");
             callback();
         };
@@ -27,7 +26,7 @@ chrome.runtime.onMessage.addListener(
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
         xhttp.send(request.data);
-        return true; // prevents the callback from being called too early on return
+        return true;
     }
     }
 );

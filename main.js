@@ -1,9 +1,8 @@
-var professorName = ""; // The name of the professor currently being searched
-var ratingsPageURL = "";// The url for the actual ratemyprofessors rating page
-var searchPageURL = ""; // The url for the search page at ratemyprofessors
-var professorRating = ""; // The rating of the professor
-var numberProfessorReviews = ""; //number of reviews the professor has
 var professorMethodID = "MTG_INSTR$" //variable instructor is stored under in HUB
+var profName = ""; // The name of the professor currently being searched
+var searchPageURL = ""; // The url for the search page at ratemyprofessors
+var profRating = ""; // The rating of the professor
+var numberProfessorReviews = ""; //number of reviews the professor has
 
 RunScript();
 
@@ -12,12 +11,11 @@ function RunScript()
  	var professorIndex = 0;
 	var currentProfessor = "";
 
-	while (professorName != "undefined")
+	while (profName != "undefined")
 	{
-    console.log(getProfessorName(professorIndex));
 		getProfessorName(professorIndex)
-		currentProfessor = professorName;
-		if(professorName != "Staff" && professorName != "undefined")
+		currentProfessor = profName;
+		if(profName != "Staff" && profName != "undefined")
 		{
 			getProfessorSearchPage(professorIndex, currentProfessor);
 		}
@@ -29,17 +27,17 @@ function getProfessorName(indexOfProfessor)
 {
 	try
 	{
-		professorName = document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(professorMethodID + indexOfProfessor).innerHTML;
-		return professorName;
+		profName = document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(professorMethodID + indexOfProfessor).innerHTML;
+		return profName;
 	}
 	catch (err)
 	{
-		professorName = "undefined"
+		profName = "undefined"
 	}
 }
 
 /**
- * This function sends a message to the background page (see background.js), to retrieve the professor search page from ratemyprofessor.com
+ * Sends a message to the background page (see background.js), to retrieve the professor search page from ratemyprofessor.com
  */
 function getProfessorSearchPage(professorIndex, CurrentProfessor)
 {
@@ -57,7 +55,7 @@ function getProfessorSearchPage(professorIndex, CurrentProfessor)
 
 			tempDiv.innerHTML = myHTML.replace(/<script(.|\s)*?\/script>/g, '');
 
-			var professorClass = tempDiv.getElementsByClassName("listing PROFESSOR")[0].getElementsByTagName('a')[0]; // etc. etc.
+			var professorClass = tempDiv.getElementsByClassName("listing PROFESSOR")[0].getElementsByTagName('a')[0];
 
 			searchPageURL =  "http://www.ratemyprofessors.com" + professorClass.getAttribute('href');
 
@@ -67,7 +65,6 @@ function getProfessorSearchPage(professorIndex, CurrentProfessor)
 
 function getProfessorRating(professorIndex, SearchPageURL)
 {
-
 	chrome.runtime.sendMessage({
 		method: 'POST',
 		action: 'xhttp',
@@ -85,9 +82,9 @@ function getProfessorRating(professorIndex, SearchPageURL)
 
 		tempDiv.childNodes;
 
-		// check if professor rating is a number.
+		// check if professor rating is a number
 		if(!isNaN(tempDiv.getElementsByClassName("grade")[0].innerHTML))
-		professorRating = tempDiv.getElementsByClassName("grade")[0].innerHTML;
+		profRating = tempDiv.getElementsByClassName("grade")[0].innerHTML;
     numberProfessorReviews = tempDiv.getElementsByClassName("table-toggle rating-count active")[0].innerHTML; //gets professor review count string
     var numberProfessorReviewsFinal = "";
     for(var i=0; i<numberProfessorReviews.length; i++){ //converts string to just number of review count
@@ -98,7 +95,7 @@ function getProfessorRating(professorIndex, SearchPageURL)
 
 		var professorID = document.getElementById('ptifrmtgtframe').contentWindow.document.getElementById(professorMethodID + response.professorIndex);
 
-		addRatingToPage(professorID, professorRating, response.searchPageURL, numberProfessorReviewsFinal);
+		addRatingToPage(professorID, profRating, response.searchPageURL, numberProfessorReviewsFinal);
 	});
 }
 
