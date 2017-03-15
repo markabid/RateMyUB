@@ -1,6 +1,6 @@
 var profVariableName = "MTG_INSTR$" //variable instructor is stored under in HUB
 var profName = ""; // The name of the professor currently being searched
-var searchPageURL = ""; // The url for the search page at ratemyprofessors
+var searchPageURL = ""; // The url for the search page at website
 var profRating = ""; // The rating of the professor
 var numberProfessorReviews = ""; //number of reviews the professor has
 
@@ -44,14 +44,14 @@ function getProfessorName(indexOfProfessor)
 }
 
 /**
- * Sends a message to the background page (see background.js), to retrieve the professor search page from ratemyprofessor.com
+ * Sends a message to the background page (see background.js), to retrieve the professor search page from sitename.com
  */
 function getProfessorSearchPage(professorIndex, CurrentProfessor)
 {
 	chrome.runtime.sendMessage({
 		method: 'POST',
 		action: 'xhttp',
-		url: 'http://www.ratemyprofessors.com/search.jsp?queryBy=teacherName&schoolName=university%20at%20buffalo&queryoption=HEADER&query=' + CurrentProfessor + '&facetSearch=true',
+		url: 'http://www.sitename.com/search.jsp?queryBy=teacherName&schoolName=university%20at%20buffalo&queryoption=HEADER&query=' + CurrentProfessor + '&facetSearch=true',
 		data: '',
 		link: searchPageURL,
 		index: professorIndex
@@ -64,7 +64,7 @@ function getProfessorSearchPage(professorIndex, CurrentProfessor)
 
 			var professorClass = tempDiv.getElementsByClassName("listing PROFESSOR")[0].getElementsByTagName('a')[0];
 
-			searchPageURL =  "http://www.ratemyprofessors.com" + professorClass.getAttribute('href');
+			searchPageURL =  "http://www.sitename.com" + professorClass.getAttribute('href');
 
 			getProfessorRating(response.professorIndex, searchPageURL)
 		});
