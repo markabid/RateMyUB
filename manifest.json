@@ -10,7 +10,7 @@
  },
 
 	"permissions": [
-		//"http://www.nameofwebsite.com/*",
+		"http://www.nameofwebsite.com/*",
 		"activeTab"
 	],
 
